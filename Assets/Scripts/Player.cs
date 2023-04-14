@@ -72,6 +72,28 @@ public class Player : MonoBehaviour
                 nextFire = Time.time + fireRate;
                 anim.SetTrigger("Shoot");
                 GameObject tempbullet = Instantiate(bulletPrefab, shotSpawner.position, shotSpawner.rotation);
+                if (crouched && !onGround) {
+                    tempbullet.transform.eulerAngles = new Vector3(0,0,-90);
+                    if (!facingRight)
+                        tempbullet.GetComponent<Bullet>().transform.Translate((float)-5,(float)-4.3,0);
+                    else
+                        tempbullet.GetComponent<Bullet>().transform.Translate((float)-5,(float)-2.8,0);
+                }
+                else if (!facingRight && !lookingUp)
+                {
+                    tempbullet.GetComponent<Bullet>().speed *= -1;
+                    tempbullet.GetComponent<Bullet>().transform.Translate((float)-3.5,0,0);
+                }
+                else if (!facingRight && lookingUp)
+                {
+                    tempbullet.transform.eulerAngles = new Vector3(0,0,90);
+                    tempbullet.GetComponent<Bullet>().transform.Translate((float)3.5,-3,0);
+                }
+                else if (facingRight && lookingUp)
+                {
+                    tempbullet.transform.eulerAngles = new Vector3(0,0,90);
+                    tempbullet.GetComponent<Bullet>().transform.Translate((float)3.5,(float)-4.3,0);
+                }
             }
 
             lookingUp = Input.GetButton("Up");

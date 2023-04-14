@@ -23,6 +23,16 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-    Destroy(gameObject);
+        Enemy otherEnemy = other.GetComponent<Enemy>();
+        if (otherEnemy != null)
+        {
+            otherEnemy.TakeDamage(damage);
+        }
+        else
+        {
+            Debug.Log("Hit something else");
+        }
+        
+        Destroy(gameObject);
     }
 }
