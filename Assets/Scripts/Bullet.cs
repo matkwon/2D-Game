@@ -28,10 +28,6 @@ public class Bullet : MonoBehaviour
         {
             otherEnemy.TakeDamage(damage);
         }
-        else
-        {
-            Debug.Log("Hit something else");
-        }
         
         Destroy(gameObject);
     }

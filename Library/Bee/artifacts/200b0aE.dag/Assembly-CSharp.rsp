@@ -382,6 +382,7 @@
 "Assets/Scripts/Bullet.cs"
 "Assets/Scripts/DestroyByTime.cs"
 "Assets/Scripts/Enemy.cs"
+"Assets/Scripts/GameManager.cs"
 "Assets/Scripts/Player.cs"
 "Assets/Scripts/Zombie.cs"
 -langversion:9.0

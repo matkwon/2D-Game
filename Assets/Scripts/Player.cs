@@ -20,11 +20,15 @@ public class Player : MonoBehaviour
     private bool crouched;
     private bool lookingUp;
     private bool reloading;
-
     private float fireRate = 0.5f;
     private float nextFire;
 
+    private int health;
+    private int maxHealth;
+
     private bool isDead = false;
+
+    GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +36,11 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         groundCheck = gameObject.transform.Find("GroundCheck");
         anim = GetComponent<Animator>();
+
+        gameManager = GameManager.gameManager;
+
+        SetPlayerStatus();
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -146,5 +155,11 @@ public class Player : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    public void SetPlayerStatus()
+    {
+        fireRate = gameManager.fireRate;
+        maxHealth = gameManager.health;
     }
 }
