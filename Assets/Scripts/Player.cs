@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 
     public float speed = 5f;
     public float jumpForce = 600;
+    public GameObject bulletPrefab;
+    public Transform shotSpawner;
 
     private Animator anim;
     private Rigidbody2D rb;
@@ -18,6 +20,9 @@ public class Player : MonoBehaviour
     private bool crouched;
     private bool lookingUp;
     private bool reloading;
+
+    private float fireRate = 0.5f;
+    private float nextFire;
 
     private bool isDead = false;
 
@@ -62,9 +67,11 @@ public class Player : MonoBehaviour
                 anim.SetBool("Reloading", true);
             }
 
-            if (Input.GetButtonDown("Shoot"))
+            if (Input.GetButtonDown("Shoot") && Time.time > nextFire)
             {
+                nextFire = Time.time + fireRate;
                 anim.SetTrigger("Shoot");
+                GameObject tempbullet = Instantiate(bulletPrefab, shotSpawner.position, shotSpawner.rotation);
             }
 
             lookingUp = Input.GetButton("Up");
