@@ -6,13 +6,15 @@ public class Bullet : MonoBehaviour
 {
 
     public float speed = 10;
-    public int damage = 1;
     public float lifeTime = 1.5f;
+
+    GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         Destroy(gameObject, lifeTime);
+        gameManager = GameManager.gameManager;
     }
 
     // Update is called once per frame
@@ -24,11 +26,17 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Enemy otherEnemy = other.GetComponent<Enemy>();
+        Player otherPlayer = other.GetComponent<Player>();
         if (otherEnemy != null)
         {
-            otherEnemy.TakeDamage(damage);
+            otherEnemy.TakeDamage(gameManager.playerDamage);
+            Destroy(gameObject);
+        }
+        if (otherPlayer != null)
+        {
+            otherPlayer.TakeDamage(gameManager.enemyDamage);
+            Destroy(gameObject);
         }
         
-        Destroy(gameObject);
     }
 }

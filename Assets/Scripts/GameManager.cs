@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
-    public int health = 5;
-    public int damage = 1;
+    
+    public int health = 200;
+    public int playerDamage = 1;
+    public int enemyDamage = 10;
+    public int spikeDamage = 25;
     public float fireRate = 0.5f;
-    public int coins;
+    public int coins = 0;
+    public enum SpecialType{None, Bomb, Laser}
+    public SpecialType currentSpecial = SpecialType.None;
     
     public static GameManager gameManager;
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Enemy : MonoBehaviour
     public float speed;
     public float attackDistance;
     public GameObject deathAnimation;
+    public Slider healthBar;
 
     protected Animator anim;
     protected bool facingRight = false;
@@ -16,6 +18,8 @@ public class Enemy : MonoBehaviour
     protected float targetDistance;
     protected Rigidbody2D rb;
     protected SpriteRenderer sprite;
+
+    GameManager gameManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -46,11 +50,15 @@ public class Enemy : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+        Vector3 barScale = healthBar.transform.localScale;
+        barScale.x *= -1;
+        healthBar.transform.localScale = barScale;
     }
 
     public void TakeDamage(int damage)
     {
         health -= damage;
+        healthBar.value = health;
         if (health <= 0)
         {
             Instantiate(deathAnimation, transform.position, transform.rotation);

@@ -9,12 +9,14 @@ public class Zombie : Enemy
     public Transform shotSpawner;
     public float nextFire;
 
+    private Animator animZ;
     private float lastFire = 0f;
+    private float lastBreath = -0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        animZ = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -23,11 +25,17 @@ public class Zombie : Enemy
         base.Update();
         if (targetDistance < attackDistance && targetDistance > -attackDistance)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+            if (Time.time - lastFire > nextFire - 0.5f)
+            {
+                animZ.SetBool("BuildUp", true);
+            } else
+                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
             if (Time.time - lastFire > nextFire)
             {
+                animZ.SetBool("BuildUp", false);
                 Shoot();
                 lastFire = Time.time;
+                lastBreath = lastFire - 0.5f;
             }
         }
     }
