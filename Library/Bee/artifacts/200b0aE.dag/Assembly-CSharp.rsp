@@ -398,6 +398,7 @@
 "Assets/Scripts/Spike.cs"
 "Assets/Scripts/UIManager.cs"
 "Assets/Scripts/Zombie.cs"
+"Assets/Scripts/ZombieFly.cs"
 -langversion:9.0
 
 /deterministic
