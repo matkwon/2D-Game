@@ -7,8 +7,9 @@ public class GameManager : MonoBehaviour
     
     public int health = 200;
     public int playerDamage = 1;
-    public int enemyDamage = 10;
-    public int spikeDamage = 25;
+    public int enemyDamage = 20;
+    public int spikeDamage = 30;
+    public int lasers = 0;
     public float fireRate = 0.5f;
     public int coins = 0;
     public enum SpecialType{None, Bomb, Laser}

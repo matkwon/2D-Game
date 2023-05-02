@@ -4,21 +4,11 @@ using UnityEngine;
 
 public class BombBullet : MonoBehaviour
 {
-    GameManager gameManager;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        gameManager = GameManager.gameManager;
-    }
+    public GameObject explosion;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Enemy otherEnemy = other.GetComponent<Enemy>();
-        if (otherEnemy != null)
-        {
-            otherEnemy.TakeDamage(gameManager.playerDamage+2);
-            Destroy(gameObject);
-        }
+        Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }

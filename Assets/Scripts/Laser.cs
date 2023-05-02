@@ -14,6 +14,7 @@ public class Laser : Collectible
         if (otherPlayer != null)
         {
             GameManager.gameManager.currentSpecial = GameManager.SpecialType.Laser;
+            GameManager.gameManager.lasers = 3;
             laserImage.color = Color.white;
             bombImage.color = new Color(0,0,0,0);
             Destroy(gameObject);

@@ -7,7 +7,7 @@ public class EndScreen : MonoBehaviour
 {
     public void Replay()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("Game");
         
     }
     public void Menu()

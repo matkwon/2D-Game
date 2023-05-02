@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public Slider healthBar;
     public float speed = 5f;
     public float jumpForce = 600;
+    public float bombForce = 400;
     public GameObject bulletPrefab;
     public GameObject laserPrefab;
     public GameObject bombPrefab;
@@ -111,7 +112,7 @@ public class Player : MonoBehaviour
                 nextFire = Time.time + fireRate;
                 anim.SetTrigger("Shoot");
                 GameObject tempbullet;
-                if (currentSpecial == SpecialType.Laser)
+                if (currentSpecial != SpecialType.None)
                 {
                     tempbullet = Instantiate(shotPrefab, laserSpawner.position, laserSpawner.rotation);
                 }
@@ -123,52 +124,96 @@ public class Player : MonoBehaviour
                         if (currentSpecial == SpecialType.Laser)
                         {
                             tempbullet.GetComponent<LaserBullet>().speed *= -1;
-                            tempbullet.GetComponent<LaserBullet>().transform.Translate((float)-3.3,(float)-3.8,0);
+                            tempbullet.GetComponent<LaserBullet>().transform.Translate(-3.3f,-3.8f,0);
+                            DiscountLaser();
+                        }
+                        else if (currentSpecial == SpecialType.Bomb)
+                        {
+                            tempbullet.GetComponent<BombBullet>().transform.Translate(-3.3f,-3.8f,0);
+                            tempbullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(0.0f, -1.0f) * bombForce);
+                            NoSpecial();
                         }
                         else
                         {
                             tempbullet.GetComponent<Bullet>().speed *= -1;
-                            tempbullet.GetComponent<Bullet>().transform.Translate((float)-3.3,(float)-3.8,0);
+                            tempbullet.GetComponent<Bullet>().transform.Translate(-3.3f,-3.8f,0);
                         }
                     else
                         if (currentSpecial == SpecialType.Laser)
-                            tempbullet.GetComponent<LaserBullet>().transform.Translate((float)1,(float)-3.8,0);
+                        {
+                            tempbullet.GetComponent<LaserBullet>().transform.Translate(1,-3.8f,0);
+                            DiscountLaser();
+                        }
+                        else if (currentSpecial == SpecialType.Bomb)
+                        {
+                            tempbullet.GetComponent<BombBullet>().transform.Translate(1,-3.8f,0);
+                            tempbullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(0.0f, -1.0f) * bombForce);
+                            NoSpecial();
+                        }
                         else
-                            tempbullet.GetComponent<Bullet>().transform.Translate((float)-1,(float)-3.8,0);
+                            tempbullet.GetComponent<Bullet>().transform.Translate(-1,-3.8f,0);
                 }
                 else if (!facingRight && !lookingUp)
                     if (currentSpecial == SpecialType.Laser)
                     {
                         tempbullet.GetComponent<LaserBullet>().speed *= -1;
-                        tempbullet.GetComponent<LaserBullet>().transform.Translate((float)0.0,0,0);
+                        tempbullet.GetComponent<LaserBullet>().transform.Translate(0,0,0);
+                        DiscountLaser();
+                    }
+                    else if (currentSpecial == SpecialType.Bomb)
+                    {
+                        tempbullet.GetComponent<BombBullet>().transform.Translate(0,0,0);
+                        tempbullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(-1.0f, 1.0f) * bombForce);
+                        NoSpecial();
                     }
                     else
                     {
                         tempbullet.GetComponent<Bullet>().speed *= -1;
-                        tempbullet.GetComponent<Bullet>().transform.Translate((float)-3.5,0,0);
+                        tempbullet.GetComponent<Bullet>().transform.Translate(-3.5f,0,0);
                     }
                 else if (!facingRight && lookingUp)
                     if (currentSpecial == SpecialType.Laser)
                     {
                         tempbullet.transform.eulerAngles = new Vector3(0,0,90);
-                        tempbullet.GetComponent<LaserBullet>().transform.Translate((float)1.6,(float)-1.0,0);
+                        tempbullet.GetComponent<LaserBullet>().transform.Translate(1.6f,-1.0f,0);
+                        DiscountLaser();
+                    }
+                    else if (currentSpecial == SpecialType.Bomb)
+                    {
+                        tempbullet.GetComponent<BombBullet>().transform.Translate(1.1f,1.5f,0);
+                        tempbullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(0.0f, 1.0f) * bombForce*1.4f);
+                        NoSpecial();
                     }
                     else
                     {
                         tempbullet.transform.eulerAngles = new Vector3(0,0,90);
-                        tempbullet.GetComponent<Bullet>().transform.Translate((float)3.5,-3,0);
+                        tempbullet.GetComponent<Bullet>().transform.Translate(3.5f,-3,0);
                     }
                 else if (facingRight && lookingUp)
                     if (currentSpecial == SpecialType.Laser)
                     {
                         tempbullet.transform.eulerAngles = new Vector3(0,0,90);
-                        tempbullet.GetComponent<LaserBullet>().transform.Translate((float)1.6,(float)1.1,0);
+                        tempbullet.GetComponent<LaserBullet>().transform.Translate(1.6f,1.1f,0);
+                        DiscountLaser();
+                    }
+                    else if (currentSpecial == SpecialType.Bomb)
+                    {
+                        tempbullet.GetComponent<BombBullet>().transform.Translate(-1.1f,1.5f,0);
+                        tempbullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(0.0f, 1.0f) * bombForce*1.4f);
+                        NoSpecial();
                     }
                     else
                     {
                         tempbullet.transform.eulerAngles = new Vector3(0,0,90);
-                        tempbullet.GetComponent<Bullet>().transform.Translate((float)3.5,(float)-4.3,0);
+                        tempbullet.GetComponent<Bullet>().transform.Translate(3.5f,-4.3f,0);
                     }
+                else if (currentSpecial == SpecialType.Bomb)
+                {
+                    tempbullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(1.0f, 1.0f) * bombForce);
+                    NoSpecial();
+                }
+                else if (currentSpecial == SpecialType.Laser)
+                    DiscountLaser();
                 shotAudioSource.Play();
             }
 
@@ -228,6 +273,21 @@ public class Player : MonoBehaviour
                 rb.AddForce(Vector2.up * jumpForce);
             }
         }
+    }
+
+    private void DiscountLaser() {
+        GameManager.gameManager.lasers = GameManager.gameManager.lasers-1;
+        if (GameManager.gameManager.lasers == 0) NoSpecial();
+    }
+
+    private void NoSpecial()
+    {
+        Debug.Log("ACABOU");
+        gameManager.currentSpecial = GameManager.SpecialType.None;
+        currentSpecial = SpecialType.None;
+        shotPrefab = bulletPrefab;
+        laserImage.color = new Color(0,0,0,0);
+        bombImage.color = new Color(0,0,0,0);
     }
 
     void Flip()

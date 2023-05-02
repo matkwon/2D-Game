@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class Enemy : MonoBehaviour
 {
@@ -18,8 +19,9 @@ public class Enemy : MonoBehaviour
     protected float targetDistance;
     protected Rigidbody2D rb;
     protected SpriteRenderer sprite;
+    protected GameManager gameManager;
 
-    GameManager gameManager;
+    private List<DateTime> bombs = new List<DateTime>();
 
     // Start is called before the first frame update
     void Awake()
@@ -68,6 +70,20 @@ public class Enemy : MonoBehaviour
         {
             StartCoroutine(TakeDamageCoroutine());
         }
+    }
+
+    public void TakeBombDamage(int damage, DateTime tag)
+    {
+        Debug.Log("A");
+        Debug.Log(tag);
+        for (int i = 0; i < bombs.Count; i++)
+        {
+            Debug.Log("B");
+            Debug.Log(bombs[i]);
+            if (bombs[i] == tag) return;
+        }
+        bombs.Add(tag);
+        TakeDamage(damage);
     }
 
     IEnumerator TakeDamageCoroutine()

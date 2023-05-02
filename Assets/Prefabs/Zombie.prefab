@@ -472,7 +472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
-  speed: 1
+  speed: 10
   attackDistance: 10
   deathAnimation: {fileID: 221584909700997946, guid: d42ab9123a84a4f7fa70a5bd9ebf1221, type: 3}
   healthBar: {fileID: 2177205891158505666}

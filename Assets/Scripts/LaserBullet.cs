@@ -26,9 +26,15 @@ public class LaserBullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Enemy otherEnemy = other.GetComponent<Enemy>();
+        ZombieFly otherFly = other.GetComponent<ZombieFly>();
         if (otherEnemy != null)
         {
             otherEnemy.TakeDamage(gameManager.playerDamage+2);
+            Destroy(gameObject);
+        }
+        if (otherFly != null)
+        {
+            otherFly.TakeDamage(gameManager.playerDamage+2);
             Destroy(gameObject);
         }
     }

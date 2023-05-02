@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
 
     public float speed = 10;
     public float lifeTime = 1.5f;
+    public Vector3 direction = Vector3.right;
 
     GameManager gameManager;
 
@@ -20,21 +21,21 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        transform.Translate(direction * speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         Enemy otherEnemy = other.GetComponent<Enemy>();
-        Player otherPlayer = other.GetComponent<Player>();
+        ZombieFly otherFly = other.GetComponent<ZombieFly>();
         if (otherEnemy != null)
         {
             otherEnemy.TakeDamage(gameManager.playerDamage);
             Destroy(gameObject);
         }
-        if (otherPlayer != null)
+        if (otherFly != null)
         {
-            otherPlayer.TakeDamage(gameManager.enemyDamage);
+            otherFly.TakeDamage(gameManager.playerDamage);
             Destroy(gameObject);
         }
         
