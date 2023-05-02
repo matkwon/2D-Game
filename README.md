@@ -19,8 +19,16 @@ https://www.vhv.rs/viewpic/hToJRoT_hd-blast-harrier-laser-transparent-background
 
 https://admurin.itch.io/enemy-bat
 
+https://thenounproject.com/browse/icons/term/finish-line-flag/
+
 Sounds
 
 https://pixabay.com/sound-effects/search/duration/0-30/
 
 https://pixabay.com/sound-effects/search/8-bit/
+
+https://pixabay.com/sound-effects/search/pain/
+
+Tutorial
+
+https://youtube.com/playlist?list=PLgTmU6kuSLtwR_bsPOWx7ZtDCKKpZgSCk
