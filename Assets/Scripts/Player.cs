@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     public GameObject background;
     public GameObject shotAudioGameObject;
     private AudioSource shotAudioSource;
+    public GameObject damageAudioGO;
+    private AudioSource damageAudio;
 
     private GameObject shotPrefab;
     private Animator anim;
@@ -72,6 +74,7 @@ public class Player : MonoBehaviour
 
         shotPrefab = bulletPrefab;
         shotAudioSource = shotAudioGameObject.GetComponent<AudioSource>();
+        damageAudio = damageAudioGO.GetComponent<AudioSource>();
 
         sprite = GetComponent<SpriteRenderer>();
     }
@@ -312,15 +315,18 @@ public class Player : MonoBehaviour
             healthText.text = health.ToString();
             healthBar.value = health;
             if (health <= 0) Death();
-            else StartCoroutine(TakeDamageCoroutine());
+            else 
+            {
+                StartCoroutine(TakeDamageCoroutine());
+                damageAudio.Play();
+            }
         }
     }
 
     public void Death()
     {
-        PlayerPrefs.SetFloat("Coins", (float)coins);
-        PlayerPrefs.Save();
         gameManager.timerIsRunning = false;
+        gameManager.currentScore = gameManager.coins + gameManager.zombies;
         health = 0;
         anim.SetTrigger("Death");
         isDead = true;
@@ -348,6 +354,7 @@ public class Player : MonoBehaviour
     public void GetCoin()
     {
         coins++;
+        gameManager.coins = coins;
         coinsText.text = coins.ToString();
     }
 

@@ -10,8 +10,13 @@ public class EndScreen : MonoBehaviour
     public TextMeshProUGUI bestScore;
     void Start()
     {
+        UpdateRemainingTimes();
+    }
+
+    public void UpdateRemainingTimes()
+    {
         float highScore = PlayerPrefs.GetFloat("HighScore", 0);
-        float score = PlayerPrefs.GetFloat("YourScore", 0);
+        float score = GameManager.gameManager.currentScore;
         if (score > highScore)
         {
             highScore = score;
@@ -21,11 +26,10 @@ public class EndScreen : MonoBehaviour
         yourScore.text = "Your Score: " + score.ToString("F2");
         bestScore.text = "Best Score: " + highScore.ToString("F2");
     }
+
     public void Replay()
     {
         SceneManager.LoadScene("Game");
-        GameManager.gameManager.timeRemaining = 90;
-        GameManager.gameManager.timerIsRunning = true;
         
     }
     public void Menu()

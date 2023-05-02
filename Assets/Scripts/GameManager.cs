@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public int lasers = 0;
     public float fireRate = 0.5f;
     public int coins = 0;
+    public int zombies = 0;
+    public float currentScore = 0;
     public enum SpecialType{None, Bomb, Laser}
     public SpecialType currentSpecial = SpecialType.None;
     public float timeRemaining;
@@ -23,13 +25,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timeRemaining = 90f;
-        PlayerPrefs.SetFloat("Zombies", 0);
-        PlayerPrefs.SetFloat("Coins", 0);
-        PlayerPrefs.Save();
         if (gameManager == null) gameManager = this;
         else Destroy(gameObject);
-        timerIsRunning = true;
 
         DontDestroyOnLoad(gameObject);
     }

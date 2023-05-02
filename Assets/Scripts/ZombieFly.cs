@@ -94,8 +94,7 @@ public class ZombieFly : MonoBehaviour
         healthBar.value = health;
         if (health <= 0)
         {
-            PlayerPrefs.SetFloat("Zombies", PlayerPrefs.GetFloat("Zombies", 0) + 1);
-            PlayerPrefs.Save();
+            GameManager.gameManager.zombies = GameManager.gameManager.zombies + 1;
             Instantiate(deathAnimation, transform.position, transform.rotation);
             gameObject.SetActive(false);
             dieAudio.Play();

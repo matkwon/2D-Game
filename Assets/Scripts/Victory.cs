@@ -12,7 +12,7 @@ public class Victory : MonoBehaviour
     public void UpdateRemainingTimes()
     {
         float highScore = PlayerPrefs.GetFloat("HighScore", 0);
-        float score = PlayerPrefs.GetFloat("YourScore", 0);
+        float score = GameManager.gameManager.currentScore;
         if (score > highScore)
         {
             highScore = score;
@@ -30,8 +30,6 @@ public class Victory : MonoBehaviour
     public void Replay()
     {
         SceneManager.LoadScene("Game");
-        GameManager.gameManager.timeRemaining = 90;
-        GameManager.gameManager.timerIsRunning = true;
         
     }
     public void Menu()

@@ -5,7 +5,7 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    public float timeRemaining = 900f;
+    public float timeRemaining = 120;
     public bool timerIsRunning = false;
     public TextMeshProUGUI timeText;
     public GameObject victoryScreen;

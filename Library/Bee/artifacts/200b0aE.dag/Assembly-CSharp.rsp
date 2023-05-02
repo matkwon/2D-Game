@@ -396,6 +396,7 @@
 "Assets/Scripts/LaserBullet.cs"
 "Assets/Scripts/Life.cs"
 "Assets/Scripts/Player.cs"
+"Assets/Scripts/PlayGame.cs"
 "Assets/Scripts/SOData/FloatSO.cs"
 "Assets/Scripts/Spike.cs"
 "Assets/Scripts/Timer.cs"

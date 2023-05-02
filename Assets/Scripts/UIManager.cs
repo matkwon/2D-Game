@@ -12,14 +12,17 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI coinsText;
     public Slider healthBar;
     public TextMeshProUGUI timeText;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.SetFloat("YourScore", 0);
-        PlayerPrefs.SetFloat("Coins", 0);
-        PlayerPrefs.SetFloat("Zombies", 0);
-        PlayerPrefs.Save();
+        gameManager = GameManager.gameManager;
+        gameManager.currentScore = 0;
+        gameManager.timeRemaining = 120;
+        gameManager.coins = 0;
+        gameManager.zombies = 0;
+        gameManager.timerIsRunning = true;
         UpdateHealthBar();
         UpdateCoins();
         UpdateHealthUI(200);
@@ -27,20 +30,20 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.gameManager.timerIsRunning)
+        if (gameManager.timerIsRunning)
         {
-            if (GameManager.gameManager.timeRemaining > 0)
+            if (gameManager.timeRemaining > 0)
             {
-                GameManager.gameManager.timeRemaining -= Time.deltaTime;
-                DisplayTime(GameManager.gameManager.timeRemaining);
+                gameManager.timeRemaining -= Time.deltaTime;
+                DisplayTime(gameManager.timeRemaining);
             }
             else
             {
                 PlayerPrefs.SetFloat("YourScore", PlayerPrefs.GetFloat("Coins", 0) + PlayerPrefs.GetFloat("Zombies", 0));
                 PlayerPrefs.Save();
-                GameManager.gameManager.timeRemaining = 0;
-                GameManager.gameManager.timerIsRunning = false;
-                DisplayTime(GameManager.gameManager.timeRemaining);
+                gameManager.timeRemaining = 0;
+                gameManager.timerIsRunning = false;
+                DisplayTime(gameManager.timeRemaining);
                 SceneManager.LoadScene("Death");
             }
         }
@@ -55,7 +58,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowVictoryScreen()
     {
-        GameManager.gameManager.timerIsRunning = false;
+        gameManager.timerIsRunning = false;
         SceneManager.LoadScene("Victory");
     }
 
@@ -67,12 +70,12 @@ public class UIManager : MonoBehaviour
 
     public void UpdateCoins()
     {
-        coinsText.text = GameManager.gameManager.coins.ToString();
+        coinsText.text = gameManager.coins.ToString();
     }
 
     public void UpdateHealthBar()
     {
-        healthBar.maxValue = GameManager.gameManager.health;
+        healthBar.maxValue = gameManager.health;
     }
 
 }

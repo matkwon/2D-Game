@@ -12,8 +12,7 @@ public class Flag : MonoBehaviour
         Player otherPlayer = other.GetComponent<Player>();
         if (otherPlayer != null)
         {
-            PlayerPrefs.SetFloat("YourScore", PlayerPrefs.GetFloat("Coins", 0) + PlayerPrefs.GetFloat("Zombies", 0) + GameManager.gameManager.timeRemaining + GameManager.gameManager.health);
-            PlayerPrefs.Save();
+            GameManager.gameManager.currentScore = GameManager.gameManager.coins + GameManager.gameManager.zombies + GameManager.gameManager.timeRemaining + GameManager.gameManager.health;
             SceneManager.LoadScene("Victory");
         }
     }
