@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class Zombie : Enemy
     private Animator animZ;
     private float lastFire = 0f;
     private float lastBreath = -0.5f;
+    private 
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +47,8 @@ public class Zombie : Enemy
         GameObject tempbullet = Instantiate(bulletPrefab, shotSpawner.position, shotSpawner.rotation);
         if (facingRight)
         {
-            tempbullet.GetComponent<Bullet>().speed *= -1;
-            tempbullet.GetComponent<Bullet>().transform.Translate((float)-0.5,0,0);
+            tempbullet.GetComponent<ZombieBullet>().speed *= -1;
+            tempbullet.GetComponent<ZombieBullet>().transform.Translate((float)-0.5,0,0);
         }
     }
 }

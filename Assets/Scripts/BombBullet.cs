@@ -8,7 +8,12 @@ public class BombBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Instantiate(explosion, transform.position, transform.rotation);
-        Destroy(gameObject);
+        Enemy otherEnemy = other.GetComponent<Enemy>();
+        ZombieFly otherFly = other.GetComponent<ZombieFly>();
+        if (otherEnemy != null || otherFly != null || other.tag == "Ground" || other.tag == "Spike")
+        {
+            if (otherEnemy != null || otherFly != null) Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
     }
 }

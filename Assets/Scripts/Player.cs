@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
     private int health;
     private int coins;
     private int maxHealth;
+    private bool doubleJumpAvailable = true;
+    private int jumpsPerformed = 0;
 
     private enum SpecialType{None, Bomb, Laser}
     private SpecialType currentSpecial = SpecialType.None;
@@ -84,9 +86,10 @@ public class Player : MonoBehaviour
             if (onGround)
             {
                 anim.SetBool("Jump", false);
+                jumpsPerformed = 0;
             }
             
-            if (Input.GetButtonDown("Jump") && onGround && !reloading)
+            if (Input.GetButtonDown("Jump") && (onGround || (doubleJumpAvailable && jumpsPerformed < 2)) && !reloading)
             {
                 jump = true;
             }
@@ -217,7 +220,7 @@ public class Player : MonoBehaviour
                 shotAudioSource.Play();
             }
 
-            if (Input.GetButtonDown("Special"))
+            if (Input.GetButtonDown("Reload"))
             {
                 if (gameManager.currentSpecial == GameManager.SpecialType.Bomb)
                 {
@@ -270,6 +273,7 @@ public class Player : MonoBehaviour
             {
                 anim.SetBool("Jump", true);
                 jump = false;
+                jumpsPerformed++;
                 rb.AddForce(Vector2.up * jumpForce);
             }
         }
@@ -282,7 +286,6 @@ public class Player : MonoBehaviour
 
     private void NoSpecial()
     {
-        Debug.Log("ACABOU");
         gameManager.currentSpecial = GameManager.SpecialType.None;
         currentSpecial = SpecialType.None;
         shotPrefab = bulletPrefab;
@@ -315,6 +318,9 @@ public class Player : MonoBehaviour
 
     public void Death()
     {
+        PlayerPrefs.SetFloat("Coins", (float)coins);
+        PlayerPrefs.Save();
+        gameManager.timerIsRunning = false;
         health = 0;
         anim.SetTrigger("Death");
         isDead = true;

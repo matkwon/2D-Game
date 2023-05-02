@@ -354,12 +354,11 @@ MonoBehaviour:
   bulletPrefab: {fileID: 4792531792489338144, guid: af97be89b53de4a4699e3f0f96f7880f, type: 3}
   shootingPosition: {fileID: 5949909889632707051}
   player: {fileID: 0}
-  stopDistance: 2
-  amplitude: 1
+  attackDistance: 10
+  amplitude: 0.5
   frequency: 0.2
   healthBar: {fileID: 5949909889445326666}
   deathAnimation: {fileID: 221584909700997946, guid: d42ab9123a84a4f7fa70a5bd9ebf1221, type: 3}
-  attackDistance: 10
 --- !u!212 &5949909890051618398
 SpriteRenderer:
   m_ObjectHideFlags: 0

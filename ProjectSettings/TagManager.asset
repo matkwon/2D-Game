@@ -9,6 +9,7 @@ TagManager:
   - LaserSpecial
   - ZombieTop
   - DeathLine
+  - Spike
   layers:
   - Default
   - TransparentFX

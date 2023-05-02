@@ -28,14 +28,10 @@ public class Bullet : MonoBehaviour
     {
         Enemy otherEnemy = other.GetComponent<Enemy>();
         ZombieFly otherFly = other.GetComponent<ZombieFly>();
-        if (otherEnemy != null)
+        if (otherEnemy != null || otherFly != null || other.tag == "Ground" || other.tag == "Spike")
         {
-            otherEnemy.TakeDamage(gameManager.playerDamage);
-            Destroy(gameObject);
-        }
-        if (otherFly != null)
-        {
-            otherFly.TakeDamage(gameManager.playerDamage);
+            if (otherEnemy != null) otherEnemy.TakeDamage(gameManager.playerDamage);
+            else if (otherFly != null) otherFly.TakeDamage(gameManager.playerDamage);
             Destroy(gameObject);
         }
         

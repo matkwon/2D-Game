@@ -27,9 +27,9 @@ public class ZombieBullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Player otherPlayer = other.GetComponent<Player>();
-        if (otherPlayer != null)
+        if (otherPlayer != null || other.tag == "Ground" || other.tag == "Spike")
         {
-            otherPlayer.TakeDamage(gameManager.enemyDamage);
+            if (otherPlayer != null) otherPlayer.TakeDamage(gameManager.enemyDamage);
             Destroy(gameObject);
         }
         

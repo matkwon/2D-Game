@@ -12,6 +12,10 @@ public class Enemy : MonoBehaviour
     public float attackDistance;
     public GameObject deathAnimation;
     public Slider healthBar;
+    public GameObject damageAudioGO;
+    public GameObject dieAudioGO;
+    private AudioSource damageAudio;
+    private AudioSource dieAudio;
 
     protected Animator anim;
     protected bool facingRight = false;
@@ -30,6 +34,8 @@ public class Enemy : MonoBehaviour
         target = FindObjectOfType<Player>().transform;
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        damageAudio = damageAudioGO.GetComponent<AudioSource>();
+        dieAudio = dieAudioGO.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -63,12 +69,16 @@ public class Enemy : MonoBehaviour
         healthBar.value = health;
         if (health <= 0)
         {
+            PlayerPrefs.SetFloat("Zombies", PlayerPrefs.GetFloat("Zombies", 0) + 1);
+            PlayerPrefs.Save();
             Instantiate(deathAnimation, transform.position, transform.rotation);
             gameObject.SetActive(false);
+            dieAudio.Play();
         }
         else
         {
             StartCoroutine(TakeDamageCoroutine());
+            damageAudio.Play();
         }
     }
 

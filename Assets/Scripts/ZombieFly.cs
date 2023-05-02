@@ -13,13 +13,15 @@ public class ZombieFly : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform shootingPosition;
     public Transform player;
-    public float stopDistance;
+    public float attackDistance;
     public float amplitude;
     public float frequency;
     public Slider healthBar;
     public GameObject deathAnimation;
-    public float attackDistance;
-    protected float targetDistance;
+    public GameObject damageAudioGO;
+    public GameObject dieAudioGO;
+    private AudioSource damageAudio;
+    private AudioSource dieAudio;
 
     private SpriteRenderer sprite;
     private bool facingRight = false;
@@ -32,6 +34,8 @@ public class ZombieFly : MonoBehaviour
         shootCooldown = 0f;
         startPosition = transform.position;
         sprite = GetComponent<SpriteRenderer>();
+        damageAudio = damageAudioGO.GetComponent<AudioSource>();
+        dieAudio = dieAudioGO.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -45,17 +49,14 @@ public class ZombieFly : MonoBehaviour
         if (player == null) return;
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        if (targetDistance < attackDistance && targetDistance > -attackDistance)
+        if (distanceToPlayer < attackDistance)
         {
-            if (distanceToPlayer > stopDistance)
-            {
-                float direction = Mathf.Sign(player.position.x - transform.position.x);
-                if (direction > 0 && !facingRight)
-                    Flip();
-                else if (direction < 0 && facingRight)
-                    Flip();
-                transform.position += new Vector3(direction * speed * Time.deltaTime, Mathf.Sin((Time.time * frequency) * 2 * Mathf.PI) * amplitude * Time.deltaTime, 0f);
-            }
+            float direction = Mathf.Sign(player.position.x - transform.position.x);
+            if (direction > 0 && !facingRight)
+                Flip();
+            else if (direction < 0 && facingRight)
+                Flip();
+            transform.position += new Vector3(direction * speed * Time.deltaTime, Mathf.Sin((Time.time * frequency) * 2 * Mathf.PI) * amplitude * Time.deltaTime, 0f);
         }
     }
 
@@ -82,7 +83,6 @@ public class ZombieFly : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, shootingPosition.position, Quaternion.identity);
             ZombieBullet bulletScript = bullet.GetComponent<ZombieBullet>();
             bulletScript.direction = Vector3.down;
-            Debug.Log("DOWN");
         }
     }
 
@@ -94,23 +94,23 @@ public class ZombieFly : MonoBehaviour
         healthBar.value = health;
         if (health <= 0)
         {
+            PlayerPrefs.SetFloat("Zombies", PlayerPrefs.GetFloat("Zombies", 0) + 1);
+            PlayerPrefs.Save();
             Instantiate(deathAnimation, transform.position, transform.rotation);
             gameObject.SetActive(false);
+            dieAudio.Play();
         }
         else
         {
             StartCoroutine(TakeDamageCoroutine());
+            damageAudio.Play();
         }
     }
 
     public void TakeBombDamage(int damage, DateTime tag)
     {
-        Debug.Log("A");
-        Debug.Log(tag);
         for (int i = 0; i < bombs.Count; i++)
         {
-            Debug.Log("B");
-            Debug.Log(bombs[i]);
             if (bombs[i] == tag) return;
         }
         bombs.Add(tag);
